@@ -1,0 +1,66 @@
+extends ../layout/base 
+block content 
+	section.content-header 
+		h1 
+			| Edit Customer
+			small menu for editing customer data
+		ol.breadcrumb 
+			li 
+				a(href='#') 
+					i.fa.fa-dashboard
+					| Level 
+			li.active Here 
+	section.content
+		.box
+			.box-header.with-border
+				h3.box-title
+					| Customer
+				.box-tools.pull-right
+					button(type='button', data-widget='collapse', data-toggle='tooltip',title='collapse').btn.btn-box-tool
+						i.fa.fa-minus
+					
+			.box-body
+				form(role='form',method='post' action='/customers/edit/#{(id==undefined) ? data.id : id}')
+					.row
+						
+						.col-xs-6
+							.box-body
+								- if (messages.msg_error) 
+									.alert.alert-danger.alert-dismissable 
+										button.close(type='button', data-dismiss='alert', aria-hidden='true') 
+											| ×
+										h4
+											i.icon.fa.fa-ban
+											| Alert! 
+										| !{messages.msg_error}
+								- if (messages.msg_info) 
+									.alert.alert-success.alert-dismissable 
+										button.close(type='button', data-dismiss='alert', aria-hidden='true') 
+											| ×
+										h4
+											i.icon.fa.fa-ban
+											| Success! 
+										| !{messages.msg_info}
+								.form-group
+									label
+										| Nombre
+									input(type='text',value="#{data.nombre}",name='ip',placeholder='Enter Nombre', autofocus).form-control
+								.form-group
+									label
+										| IP
+									input(type='text',value="#{ (ip == undefined) ? data.ip : ip }",name='ip',placeholder='Enter ip').form-control
+								.form-group
+									label
+										| Sistema Operativo
+									input(type='text',value="#{ (so == undefined) ? data.so : so }",name='so',placeholder='Enter so').form-control
+								.form-group
+									label
+										| Procesador
+									input(type='text',value="#{ (procesador == undefined) ? data.procesador : procesador }",name='procesador',placeholder='Enter Procesador').form-control
+							.box-footer
+								input(type="hidden",name="_method", value="PUT")
+								button(type='submit').btn.btn-primary
+									i.fa.fa-pencil 
+									|  Edit
+								a(href='/informacion').btn.btn-primary.pull-right
+									| Back

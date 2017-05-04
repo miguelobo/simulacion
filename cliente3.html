@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cliente Websockets</title>
+</head>
+<body>
+<input id=msg><button id=enviar>Enviar</button>
+<div id=salida></div>
+
+<script>
+    (function () {
+        var ws = new WebSocket("ws://localhost:8085"),
+            salida = document.getElementById('salida'),
+            enviar = document.getElementById('enviar');
+        function logStr(eventStr, msg) {
+            return '<div>' + eventStr + ': ' + msg + '</div>';
+        }
+        enviar.addEventListener('click', function () {
+            var msg = document.getElementById('msg').value;
+
+            ws.send(msg);
+            var infor={
+                user:navigator.userAgent,
+                plataforma:navigator.platform,
+                EnLinea:navigator.onLine,
+                date: Date.now()
+            }
+            ws.send(JSON.stringify(infor));
+
+            //ws.send(navigator.userAgent);
+            salida.innerHTML += logStr('Enviado', msg);
+
+            salida.innerHTML += logStr('Enviado',JSON.stringify(infor));
+        });
+        ws.onmessage = function (e) {
+            salida.innerHTML += logStr('Recibido', e.data);
+        };
+        ws.onclose = function (e) {
+            salida.innerHTML += logStr('Desconectado', e.code + '-' + e.type);
+        };
+        ws.onerror = function (e) {
+            salida.innerHTML += logStr('Error', e.data);
+        };
+    }());
+</script>
+</body>
+</html>
+
