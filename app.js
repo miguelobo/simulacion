@@ -54,7 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 -------------------------------------------*/
 app.use(
     connection(mysql,{
-        host: 'localhost',
+        host: '186.118.81.82',
         user: 'root', // your mysql user
         password : '', // your mysql password
         port : 3306, //port mysql
